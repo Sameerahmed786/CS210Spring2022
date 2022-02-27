@@ -92,8 +92,12 @@ def get_popular_movies(d, n=10):
 
 
 # 3.2
-def filter_movies(d, thres_rating=3):
-    pass
+def filter_movies(d, threshold_rating = 3):
+    new_movie_ratings = dict()
+    for key, value in d.items():
+        if value >= threshold_rating:
+            new_movie_ratings[key] = value
+    return new_movie_ratings
 
 
 # parameter d: dictionary that maps movie to average rating
@@ -103,8 +107,22 @@ def filter_movies(d, thres_rating=3):
 
 
 # 3.3
-def get_popular_in_genre(genre, genre_to_movies, movie_to_average_rating, n=5):
-    pass
+def get_popular_in_genre(genre, genres_dict, avg_rating, n = 5):
+    movie_to_avg_dict = {}
+    movieGenres = genres_dict[genre]
+    
+    for i in movieGenres:
+        movie_to_avg_dict[i] = float(avg_rating[i])
+        
+    n_larger = "Integer N is larger than calculated dictionary"
+        
+    movie_to_avg_dict = dict(sorted(movie_to_avg_dict.items(), key = lambda item: item[1], reverse = True))
+    
+    if len(movie_to_avg_dict) >= n:
+        movie_to_avg_dict  = {j: movie_to_avg_dict[j] for j in list(movie_to_avg_dict)[:n]}
+        return movie_to_avg_dict
+    else:
+        return n_larger
 
 
 # parameter genre: genre name (e.g. "Comedy")
@@ -129,7 +147,11 @@ def get_genre_rating(genre, genre_to_movies, movie_to_average_rating):
 
 # 3.5
 def genre_popularity(genre_to_movies, movie_to_average_rating, n=5):
-    pass
+    top_rated_genres = {}
+    for i in genre_to_movies:
+        if movies_to_average_rating[genre_to_movies[i]] == n:
+            top_rated_genres[i] = genre_to_movies[i]
+    return top_rated_genres
 
 
 # parameter genre_to_movies: dictionary that maps genre to movies
@@ -142,8 +164,24 @@ def genre_popularity(genre_to_movies, movie_to_average_rating, n=5):
 # ------ TASK 4: USER FOCUSED  --------
 
 # 4.1
-def read_user_ratings(f):
-    pass
+def read_user_rating(s):
+    f = open(s)
+    dictionary_to_use = {}
+    reading = f.readlines()
+    n = len(reading)
+    count = 0
+    for x in reading:
+        s = x.split('|')
+        m = s[2]
+        l = (s[0], s[1])
+        count += count
+        if count != n:
+            m = m[:len(m)-1]
+        if s[2] in dictionary_to_use:
+            dictionary_to_use[m].append(l)
+        else:
+            dictionary_to_use[m] = l
+    return dictionary_to_use
 
 
 # parameter f: movie ratings file name (e.g. "movieRatingSample.txt")
@@ -164,8 +202,48 @@ def get_user_genre(user_id, user_to_movies, movie_to_genre):
 
 
 # 4.3
-def recommend_movies(user_id, user_to_movies, movie_to_genre, movie_to_average_rating):
-    pass
+def recommend_movies(user_id, user_movies, movies_genre, movies_average_rating):
+        movies = user_movies[user_id]
+        movie_names = []
+        
+        # Create user - to -genre rating dictionary
+        user_genre_rating = {}
+        for m in movies:
+                movie_names.append(m[0])
+                genre = movies_genre[m[0]]
+                rating = m[1]
+                if genre not in user_genre_rating:
+                        user_genre_rating[genre] = [rating, 1]
+                else:
+                        user_genre_rating[genre][0] += rating
+                        user_genre_rating[genre][1] += 1
+        
+        # Find average rating per genre by user
+        user_genre_average_rating = {}
+        for g, t in user_genre_rating.items():
+                user_genre_average_rating[g] = t[0] / t[1]
+
+        top_genre = max(user_genre_average_rating, key=user_genre_average_rating.get)
+        
+        # Find movies with top genre
+        movies_top_genre_rating = []
+        for m, g in movies_genre.items():
+                if (g == top_genre) and (m not in movie_names):
+                        movies_top_genre_rating.append((m, movies_average_rating[m]))
+                        
+        # Find the top 3 movies with highest rating
+        movies_top_genre_rating.sort(key = lambda x: x[1])
+        top_movies = movies_top_genre_rating
+        
+        # Return dict
+        return_dict = {}
+        if len(top_movies) >= 1:
+                return_dict[top_movies[0][0]] = top_movies[0][1]
+        if len(top_movies) >= 2:
+                return_dict[top_movies[1][0]] = top_movies[1][1] 
+        if len(top_movies) >= 3:
+                return_dict[top_movies[2][0]] = top_movies[2][1]
+        return return_dict
 
 
 # parameter user_id: user id
