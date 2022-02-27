@@ -209,47 +209,49 @@ def get_user_genre(user_id, user_to_movies, movie_to_genre):
 
 # 4.3
 def recommend_movies(user_id, user_movies, movies_genre, movies_average_rating):
-        movies = user_movies[user_id]
-        movie_names = []
+    user_id = str(user_id)
+    movies = user_movies[user_id]
+    movie_names = []
         
-        # Create user - to -genre rating dictionary
-        user_genre_rating = {}
-        for m in movies:
-                movie_names.append(m[0])
-                genre = movies_genre[m[0]]
-                rating = m[1]
-                if genre not in user_genre_rating:
-                        user_genre_rating[genre] = [rating, 1]
-                else:
-                        user_genre_rating[genre][0] += rating
-                        user_genre_rating[genre][1] += 1
-        
-        # Find average rating per genre by user
-        user_genre_average_rating = {}
-        for g, t in user_genre_rating.items():
-                user_genre_average_rating[g] = t[0] / t[1]
+    # Create user - to -genre rating dictionary
+    user_genre_rating = {}
+    for m in movies:
+        print(m)
+        movie_names.append(m[0])
+        genre = movies_genre[m[0]]
+        rating = m[1]
+        if genre not in user_genre_rating:
+            user_genre_rating[genre] = [rating, 1]
+        else:
+            user_genre_rating[genre][0] += rating
+            user_genre_rating[genre][1] += 1
 
-        top_genre = max(user_genre_average_rating, key=user_genre_average_rating.get)
-        
-        # Find movies with top genre
-        movies_top_genre_rating = []
-        for m, g in movies_genre.items():
-                if (g == top_genre) and (m not in movie_names):
-                        movies_top_genre_rating.append((m, movies_average_rating[m]))
-                        
-        # Find the top 3 movies with highest rating
-        movies_top_genre_rating.sort(key = lambda x: x[1])
-        top_movies = movies_top_genre_rating
-        
-        # Return dict
-        return_dict = {}
-        if len(top_movies) >= 1:
-                return_dict[top_movies[0][0]] = top_movies[0][1]
-        if len(top_movies) >= 2:
-                return_dict[top_movies[1][0]] = top_movies[1][1] 
-        if len(top_movies) >= 3:
-                return_dict[top_movies[2][0]] = top_movies[2][1]
-        return return_dict
+    # Find average rating per genre by user
+    user_genre_average_rating = {}
+    for g, t in user_genre_rating.items():
+        user_genre_average_rating[g] = t[0] / t[1]
+
+    top_genre = max(user_genre_average_rating, key=user_genre_average_rating.get)
+
+    # Find movies with top genre
+    movies_top_genre_rating = []
+    for m, g in movies_genre.items():
+        if (g == top_genre) and (m not in movie_names):
+            movies_top_genre_rating.append((m, movies_average_rating[m]))
+
+    # Find the top 3 movies with highest rating
+    movies_top_genre_rating.sort(key = lambda x: x[1])
+    top_movies = movies_top_genre_rating
+
+    # Return dict
+    return_dict = {}
+    if len(top_movies) >= 1:
+        return_dict[top_movies[0][0]] = top_movies[0][1]
+    if len(top_movies) >= 2:
+        return_dict[top_movies[1][0]] = top_movies[1][1]
+    if len(top_movies) >= 3:
+        return_dict[top_movies[2][0]] = top_movies[2][1]
+    return return_dict
 
 
 # parameter user_id: user id
@@ -274,6 +276,7 @@ def main():
     users_genre = read_user_rating('movie_ratings.txt')
     top_users_genre = get_user_genre(1, users_genre, movie_genres)
     print(f'Top Rated Users Genre: {top_users_genre}')
+    print(recommend_movies(1, users_genre, movie_genres, average_rating))
 
 
 # write all your test code here
