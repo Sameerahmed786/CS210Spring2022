@@ -34,7 +34,6 @@ def read_movie_genre(f):
     for line in open(f):
         genre, rank, movie = line.split('|')
         movie = movie.strip('\n')
-        movie = movie[:]
         genre_dict[movie] = genre
     return genre_dict
 
@@ -147,12 +146,18 @@ def get_genre_rating(genre, genre_to_movies, movie_to_average_rating):
 
 # 3.5
 def genre_popularity(genre_to_movies, movie_to_average_rating, n=5):
+    genre_avg = {}
     top_rated_genres = {}
-    for i in genre_to_movies:
-        if movie_to_average_rating[genre_to_movies[i]] == n:
-            top_rated_genres[i] = genre_to_movies[i]
-    return top_rated_genres
 
+    for key, items in genre_to_movies.items():
+        total = 0
+        avg = 0
+        for item in items:
+            total += movie_to_average_rating[item]
+        avg = total/len(items)
+        genre_avg[key] = avg
+    pop_genres = Counter(genre_avg)
+    return pop_genres.most_common(n)
 
 # parameter genre_to_movies: dictionary that maps genre to movies
 # parameter movie_to_average_rating: dictionary  that maps movie to average rating
@@ -260,11 +265,12 @@ def main():
     movie_genres = read_movie_genre('movie_genres.txt')
     genre_list = create_genre_dict(movie_genres)
     average_rating = calculate_average_rating(movie_ratings)
-    popular_movies = get_popular_movies(average_rating)
+    popular_movies = get_popular_movies(average_rating, 3)
     filtered_movies = filter_movies(average_rating)
     popular_movies_in_genre = get_popular_in_genre('Comedy', genre_list, average_rating)
     average_genre_rating = get_genre_rating('Action', genre_list, average_rating)
-    print(f'Average Genre Rating {average_genre_rating}')
+    my_list = genre_popularity(genre_list, average_rating, 3)
+    print(my_list)
 
 
 # write all your test code here
@@ -279,4 +285,5 @@ def main():
 # program will start at the following main() function call
 # when you execute hw1.py
 main()
+
 
