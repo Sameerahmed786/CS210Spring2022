@@ -170,23 +170,16 @@ def genre_popularity(genre_to_movies, movie_to_average_rating, n=5):
 
 # 4.1
 def read_user_rating(s):
-    f = open(s)
-    dictionary_to_use = {}
-    reading = f.readlines()
-    n = len(reading)
-    count = 0
-    for x in reading:
-        s = x.split('|')
-        m = s[2]
-        l = (s[0], s[1])
-        count += count
-        if count != n:
-            m = m[:len(m)-1]
-        if s[2] in dictionary_to_use:
-            dictionary_to_use[m].append(l)
+    user_rating = {}
+    for line in open(s):
+        movie, rating, user = line.split('|')
+        user = user.strip('\n')
+        if user in user_rating:
+            user_rating[user].append((movie, rating))
         else:
-            dictionary_to_use[m] = l
-    return dictionary_to_use
+            user_rating[user] = [(movie, rating)]
+    return user_rating
+
 
 
 # parameter f: movie ratings file name (e.g. "movieRatingSample.txt")
@@ -270,7 +263,7 @@ def main():
     popular_movies_in_genre = get_popular_in_genre('Comedy', genre_list, average_rating)
     average_genre_rating = get_genre_rating('Action', genre_list, average_rating)
     my_list = genre_popularity(genre_list, average_rating, 3)
-    print(my_list)
+    print(read_user_rating('movie_ratings.txt'))
 
 
 # write all your test code here
@@ -285,5 +278,7 @@ def main():
 # program will start at the following main() function call
 # when you execute hw1.py
 main()
+
+
 
 
