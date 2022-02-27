@@ -173,6 +173,7 @@ def read_user_rating(s):
     user_rating = {}
     for line in open(s):
         movie, rating, user = line.split('|')
+        rating = float(rating)
         user = user.strip('\n')
         if user in user_rating:
             user_rating[user].append((movie, rating))
@@ -189,7 +190,14 @@ def read_user_rating(s):
 
 # 4.2
 def get_user_genre(user_id, user_to_movies, movie_to_genre):
-    pass
+    user_id = str(user_id)
+    max_rating = 0
+    top_movie = ''
+    for movie, rating in user_to_movies[user_id]:
+        if rating > max_rating:
+            max_rating = rating
+            top_movie = movie
+    return movie_to_genre[top_movie]
 
 
 # parameter user_id: user id
@@ -263,7 +271,9 @@ def main():
     popular_movies_in_genre = get_popular_in_genre('Comedy', genre_list, average_rating)
     average_genre_rating = get_genre_rating('Action', genre_list, average_rating)
     my_list = genre_popularity(genre_list, average_rating, 3)
-    print(read_user_rating('movie_ratings.txt'))
+    users_genre = read_user_rating('movie_ratings.txt')
+    top_users_genre = get_user_genre(1, users_genre, movie_genres)
+    print(f'Top Rated Users Genre: {top_users_genre}')
 
 
 # write all your test code here
@@ -278,6 +288,7 @@ def main():
 # program will start at the following main() function call
 # when you execute hw1.py
 main()
+
 
 
 
