@@ -1,4 +1,5 @@
-import re
+from collections import Counter
+import math
 
 
 def stopwords():
@@ -48,8 +49,28 @@ def preprocessing():
 
 
 def compute_tfidf(docs):
+    word_occurence_in_docs = Counter()
     for file in docs:
-        pass
+        with open(file, 'r') as curr_file:
+            for line in curr_file:
+                contents = line.split(" ")
+                words = set(contents)
+                word_occurence_in_docs.update(words)
+
+    for file in docs:
+        with open(file, 'r') as curr_file:
+            for line in curr_file:
+                contents = line.split(" ")
+                word_occurence = Counter(contents)
+                distinct_words = set(contents)
+                tf_dict = {}
+                idf_dict = {}
+                tf_idf_dict = {}
+                for word in distinct_words:
+                    tf_dict[word] = word_occurence[word]/len(contents)
+                    idf_dict[word] = ((math.log(len(docs) / word_occurence_in_docs[word])) + 1)
+                    tf_idf_dict[word] = round((tf_dict[word] * idf_dict[word]), 2)
+
 
 if __name__ == '__main__':
     docs = preprocessing()
