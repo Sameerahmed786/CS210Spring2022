@@ -1,5 +1,5 @@
 import math
-import collections
+from collections import Counter
 import csv
 import re
 
@@ -17,6 +17,8 @@ import re
 # row[9] date_admission_hospital
 # row[10] date_confirmation
 # row[11] symptoms
+
+# After all these tasks, write the data back to a CSV file named “covidResult.csv”.
 
 # Part 1
 def average_age():
@@ -168,7 +170,7 @@ HokkaidoLat = round(HokkaidoLat/HokkaidoCount, 2)
 HokkaidoLong = round(HokkaidoLong/HokkaidoCount, 2)
 HongKongLat = round(HongKongLat/HongKongCount, 2)
 HongKongLong = round(HongKongLong/HongKongCount, 2)
-
+# Now iterate through the list again and add the values.
 ##########################################################################################
 # Part 4
 
@@ -217,8 +219,8 @@ with open ('covidTrain.csv') as coVid:
     f = Counter(GuangxiList)
     g = Counter(GuizhouList)
     h = Counter(HokkaidoList)
-    i = Counter(HongKongList
-                
+    i = Counter(HongKongList)
+# Now iterate through the list again and add the cities.
 ##########################################################################################
 # Part 5
 
@@ -314,9 +316,9 @@ with open ('covidTrain.csv') as coVid:
     q = Counter(HokkaidoSympList)
     r = Counter(HongKongSympList)
     
-
+# Now iterate through the list again and add the symptoms.
 ##########################################################################################
-# Have to combine everything to the new csv file
+# Combine everything to the new csv file
 # Part 1 Age Range Values
 # Part 2 Date Format
 # Part 3 Average Lat and Long values
