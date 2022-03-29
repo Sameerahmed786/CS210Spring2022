@@ -75,11 +75,9 @@ def compute_tfidf(docs, orig_docs):
                 tf_idf_list.sort(key=lambda i: i[0])
                 tf_idf_list.sort(key=lambda i:i[1], reverse=True)
 
-                print(tf_idf_list)
 
                 tfidf_file = 'tfidf_' + orig_docs[file_index]
-                print(tfidf_file)
-                print()
+                
                 with open(tfidf_file, 'w') as write_file:
                     if len(tfidf_file) <= 5:
                         write_file.write(str(tf_idf_list))
