@@ -495,7 +495,6 @@ insert into AlbumRating values
 ('SameerAhmed99', 'In Utero', 2),
 ('SameerAhmed99', 'Facelife', 3);
 
-select * from SongRating;
 
 -- Here when done (this is just to insert data to test the database) will delete up to here when done
 
