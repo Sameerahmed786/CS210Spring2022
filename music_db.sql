@@ -158,7 +158,12 @@ insert into Album values
 ('Nevermind', 'Nirvana', '1991-09-26'),
 ('Ten', 'Pearl Jam', '1991-08-27'),
 ('Dirt', 'Alice in Chains', '1992-09-29'),
-('Cowboys from Hell', 'Pantera', '1990-07-20');
+('Cowboys from Hell', 'Pantera', '1990-07-20'),
+('Far Beyond Driven', 'Pantera', '1994-03-22'),
+('Vs.', 'Pearl Jam', '1993-08-19'),
+('Vitalogy', 'Pearl Jam', '1994-11-22'),
+('In Utero', 'Nirvana', '1993-09-21'),
+('Facelife', 'Alice in Chains', '1990-08-01');
 
 insert into Song values
 ('The Leper Affinity', 'Opeth', '2001-03-12', 'Blackwater Park'),
@@ -453,8 +458,45 @@ insert into PlaylistSongs values
 ('My Top Music', 'The Unforgiven');
 
 insert into SongRating values
-('Metalhead400', 'Backbone', 5);
+('Metalhead400', 'Backbone', 4),
+('MattKilleen97', 'Enter Sandman', 5),
+('MattKilleen97', 'Even Flow', 4),
+('Metalhead400', 'Jeremy', 3),
+('Metalhead400', 'Sad But True', 5),
+('MattKilleen97', 'Sad But True', 4),
+('SameerAhmed99', 'King Nothing', 5),
+('MattKilleen97', 'Rooster', 5),
+('MattKilleen97', 'Smells Like Teen Spirit', 5),
+('MattKilleen97', 'In Bloom', 4),
+('SameerAhmed99', 'Come As You Are', 4),
+('MattKilleen97', 'Oblivion', 5),
+('MattKilleen97', 'Paranoid', 4),
+('MattKilleen97', 'Immigrant Song', 5),
+('MattKilleen97', 'Domination', 5);
+
+insert into AlbumRating values
+('MattKilleen97', 'Nevermind', 3),
+('MattKilleen97', 'Metallica', 5),
+('MattKilleen97', 'Dirt', 4),
+('MattKilleen97', 'Ten', 4),
+('MattKilleen97', 'Load', 2),
+('MattKilleen97', 'Cowboys from Hell', 5),
+('MattKilleen97', 'Still Life', 5),
+('MattKilleen97', 'Far Beyond Driven', 5),
+('MattKilleen97', 'Vs.', 4),
+('MattKilleen97', 'Vitalogy', 3),
+('MattKilleen97', 'In Utero', 2),
+('SameerAhmed99', 'Facelife', 3),
+('SameerAhmed99', 'Cowboys from Hell', 5),
+('SameerAhmed99', 'Still Life', 5),
+('SameerAhmed99', 'Far Beyond Driven', 5),
+('SameerAhmed99', 'Vs.', 4),
+('SameerAhmed99', 'Vitalogy', 3),
+('SameerAhmed99', 'In Utero', 2),
+('SameerAhmed99', 'Facelife', 3);
 
 select * from SongRating;
 
--- Here when done (this is just to insert data to test the database)
+-- Here when done (this is just to insert data to test the database) will delete up to here when done
+
+-- WRITE QUERIES BELOW HERE --
