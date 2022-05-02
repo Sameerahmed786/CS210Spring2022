@@ -495,7 +495,51 @@ insert into AlbumRating values
 ('SameerAhmed99', 'In Utero', 2),
 ('SameerAhmed99', 'Facelife', 3);
 
-
--- Here when done (this is just to insert data to test the database) will delete up to here when done
+-- delete up to here
 
 -- WRITE QUERIES BELOW HERE --
+
+-- # 6
+select username, tbl.EachTableCount
+from
+(
+	select username, count(username) as EachTableCount 
+    from SongRating 
+    group by username
+    UNION ALL
+    select username, count(username) as EachTableCount from AlbumRating group by username
+)tbl;
+
+-- # 7
+select s.artist_name, count(s.song_title) as number_of_songs
+from Artist a join Song s
+on a.artist_name = s.artist_name
+where release_date >= '1990-01-01' and release_date <= '1999-12-31'
+group by s.artist_name
+order by number_of_songs desc
+limit 10;
+
+-- # 8
+select song_title, count(song_title) as number_of_playlists
+from PlaylistSongs 
+group by song_title
+order by number_of_playlists desc
+limit 10;
+
+-- # 9
+select sg.song_title, s.artist_name, count(sg.song_title) as number_of_ratings
+from Single sg 
+	join Song s
+		on sg.song_title = s.song_title
+	join Artist a
+		on s.artist_name = s.artist_name
+	join SongRating sr
+		on s.song_title = sr.song_title
+        group by sr.song_title;
+
+select a.artist_name as artist_title
+from Artist a
+	join Song s
+		on s.artist_name = a.artist_name
+where s.release_date <= '1993-12-31'
+group by a.artist_name;
